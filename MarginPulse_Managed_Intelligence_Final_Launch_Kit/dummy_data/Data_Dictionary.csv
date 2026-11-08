@@ -1,0 +1,33 @@
+﻿Sheet,Field,Meaning / use,Validation note
+Products,ProductID,"Unique product identifier used to join sales, purchases and inventory.",Must be unique and stable.
+Products,StandardUnitCostAED,Synthetic standard unit cost in AED.,Illustrative only; not a live weighted-average / landed cost.
+Products,ListSellingPriceAED,Synthetic reference selling price in AED.,Sales line prices may vary.
+Customers,CustomerID,"Unique customer key used in sales, receivables and payments.",Must match source master.
+Customers,PaymentTermsDays,Synthetic contractual payment term in days.,Confirm actual credit terms in live data.
+Suppliers,SupplierID,Unique supplier key used in purchases.,Must match supplier master.
+Sales,InvoiceID,Invoice header identifier; repeats across product lines.,Aggregate by InvoiceID for invoice totals.
+Sales,LineNo,Line number within an invoice.,Together InvoiceID identifies a line.
+Sales,InvoiceDate,Invoice issue date.,Synthetic period 2025-11-01 to 2026-10-31.
+Sales,CustomerID / ProductID,Foreign keys to Customers and Products.,Unmatched keys should be flagged.
+Sales,Quantity,Units sold on invoice line.,Returns / credit notes are not separately modelled.
+Sales,UnitSellingPriceAED,Synthetic price per unit before line discount.,AED.
+Sales,DiscountAED,Synthetic line discount amount.,Deducted from gross line amount.
+Sales,NetSalesAED,"Quantity × price less discount, rounded to 2 decimals.",Reconciles to invoice-level receivables.
+Sales,UnitCostAED / COGSAED,Synthetic unit cost and line cost of goods sold.,Not audited cost / landed cost.
+Sales,GrossProfitAED,NetSalesAED less COGSAED.,Gross profit before operating expenses.
+Purchases,PurchaseOrderID,Purchase document identifier; repeats across item lines.,Aggregate by PO if needed.
+Purchases,PurchaseDate,Synthetic purchase date.,Use for period and supplier analysis.
+Purchases,SupplierID / ProductID,Supplier and product join keys.,Join to corresponding master sheets.
+Purchases,Quantity / UnitCostAED / LineTotalAED,"Purchased quantity, synthetic unit cost and line total.",LineTotalAED is quantity × unit cost.
+Expenses,ExpenseDate,Synthetic monthly posting date.,One row per category per month.
+Expenses,Category / Vendor / AmountAED,"Expense category, fictional vendor and monthly amount.","Amounts are sample totals, not invoice-level transactions."
+Inventory_Movements,MovementType,"Opening, Purchase, Sale or Adjustment.",Purchase quantity positive; sale quantity negative.
+Inventory_Movements,QuantityChange,Stock movement quantity signed by movement type.,Rolls into Inventory_Summary.
+Inventory_Summary,OpeningQty / ReceivedQty / SoldQty / AdjustmentsQty,Quantity roll-forward components.,ClosingQty equals opening + received - sold + adjustments.
+Inventory_Summary,IndicativeClosingValueAED,Closing quantity × synthetic standard cost.,Not a valuation ledger or accounting inventory value.
+Inventory_Summary,DaysSinceLastSale,Days from last synthetic sale to 2026-10-31.,A simple slow-movement signal; not a policy-defined ageing bucket.
+Receivables,InvoiceID,"One row per invoice, linked to Sales and Payments.",InvoiceAmountAED equals sum of Sales.NetSalesAED per invoice.
+Receivables,AmountPaidAED / OutstandingAED,Synthetic amounts paid and remaining at cut-off.,Outstanding equals invoice amount less paid.
+Receivables,DaysPastDue / AgeingBucket,Ageing at reporting cut-off 2026-10-31.,Confirm exact ageing policy in live work.
+Payments,PaymentID / InvoiceID,Synthetic receipt ID and related invoice.,One receipt row per invoice with positive paid amount.
+Payments,PaymentDate / AmountAED,Synthetic receipt date and amount.,Total payments reconcile to receivables paid amount.

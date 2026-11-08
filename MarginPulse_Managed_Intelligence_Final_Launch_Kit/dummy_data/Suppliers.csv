@@ -1,0 +1,13 @@
+﻿SupplierID,SupplierName,Country,PrimaryCategory,PaymentTermsDays,Status
+SUP001,Fictional Supplier 01 General Trading,Oman,Snacks,30,Active
+SUP002,Fictional Supplier 02 General Trading,United Arab Emirates,Beverages,15,Active
+SUP003,Fictional Supplier 03 General Trading,Oman,Beverages,15,Active
+SUP004,Fictional Supplier 04 General Trading,Saudi Arabia,Beverages,30,Active
+SUP005,Fictional Supplier 05 General Trading,Saudi Arabia,Dairy & Chilled,60,Active
+SUP006,Fictional Supplier 06 General Trading,Oman,Snacks,30,Active
+SUP007,Fictional Supplier 07 General Trading,India,Packaged Food,60,Active
+SUP008,Fictional Supplier 08 General Trading,India,Packaged Food,15,Active
+SUP009,Fictional Supplier 09 General Trading,United Arab Emirates,Dairy & Chilled,60,Active
+SUP010,Fictional Supplier 10 General Trading,Saudi Arabia,Personal Care,60,Active
+SUP011,Fictional Supplier 11 General Trading,India,Dairy & Chilled,15,Active
+SUP012,Fictional Supplier 12 General Trading,United Arab Emirates,Beverages,60,Active

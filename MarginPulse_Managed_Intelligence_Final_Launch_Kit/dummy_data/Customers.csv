@@ -1,0 +1,36 @@
+﻿CustomerID,CustomerName,CustomerSegment,Emirate,PaymentTermsDays,CreditLimitAED,Status
+CUS001,Fictional Customer 01 Trading,Mini-market,Abu Dhabi,30,15000,Active
+CUS002,Fictional Customer 02 Trading,Retail chain,Dubai,45,40000,Active
+CUS003,Fictional Customer 03 Trading,Wholesaler,Sharjah,30,40000,Active
+CUS004,Fictional Customer 04 Trading,Restaurant,Abu Dhabi,30,15000,Active
+CUS005,Fictional Customer 05 Trading,Hotel & catering,Abu Dhabi,60,25000,Active
+CUS006,Fictional Customer 06 Trading,Retail chain,Ajman,45,40000,Active
+CUS007,Fictional Customer 07 Trading,Hotel & catering,Abu Dhabi,30,15000,Active
+CUS008,Fictional Customer 08 Trading,Retail chain,Dubai,30,60000,Active
+CUS009,Fictional Customer 09 Trading,Restaurant,Dubai,30,90000,Active
+CUS010,Fictional Customer 10 Trading,Restaurant,Abu Dhabi,45,60000,Active
+CUS011,Fictional Customer 11 Trading,Wholesaler,Abu Dhabi,30,25000,Active
+CUS012,Fictional Customer 12 Trading,Retail chain,Ras Al Khaimah,60,40000,Active
+CUS013,Fictional Customer 13 Trading,Hotel & catering,Ajman,60,60000,Active
+CUS014,Fictional Customer 14 Trading,Restaurant,Abu Dhabi,30,90000,Active
+CUS015,Fictional Customer 15 Trading,Wholesaler,Dubai,15,15000,Active
+CUS016,Fictional Customer 16 Trading,Retail chain,Abu Dhabi,45,90000,Active
+CUS017,Fictional Customer 17 Trading,Mini-market,Ajman,45,90000,Active
+CUS018,Fictional Customer 18 Trading,Wholesaler,Ras Al Khaimah,30,90000,Active
+CUS019,Fictional Customer 19 Trading,Mini-market,Dubai,60,40000,Active
+CUS020,Fictional Customer 20 Trading,Restaurant,Dubai,30,60000,Active
+CUS021,Fictional Customer 21 Trading,Retail chain,Ajman,15,40000,Active
+CUS022,Fictional Customer 22 Trading,Hotel & catering,Abu Dhabi,60,15000,Active
+CUS023,Fictional Customer 23 Trading,Restaurant,Ras Al Khaimah,60,25000,Active
+CUS024,Fictional Customer 24 Trading,Retail chain,Sharjah,30,90000,Active
+CUS025,Fictional Customer 25 Trading,Hotel & catering,Dubai,60,40000,Active
+CUS026,Fictional Customer 26 Trading,Wholesaler,Dubai,15,40000,Active
+CUS027,Fictional Customer 27 Trading,Restaurant,Abu Dhabi,15,25000,Active
+CUS028,Fictional Customer 28 Trading,Hotel & catering,Dubai,15,60000,Active
+CUS029,Fictional Customer 29 Trading,Mini-market,Ras Al Khaimah,30,25000,Active
+CUS030,Fictional Customer 30 Trading,Wholesaler,Ras Al Khaimah,30,40000,Active
+CUS031,Fictional Customer 31 Trading,Hotel & catering,Ras Al Khaimah,45,25000,Active
+CUS032,Fictional Customer 32 Trading,Hotel & catering,Abu Dhabi,30,60000,Active
+CUS033,Fictional Customer 33 Trading,Restaurant,Ajman,60,60000,Active
+CUS034,Fictional Customer 34 Trading,Mini-market,Abu Dhabi,30,15000,Active
+CUS035,Fictional Customer 35 Trading,Restaurant,Dubai,60,90000,Active

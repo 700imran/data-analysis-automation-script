@@ -1,0 +1,16 @@
+﻿Topic,Value
+Dataset,Synthetic UAE general trading / distribution business
+Entity,Fictional example only — not a real company or client
+Currency,AED; amounts are net values as recorded in the synthetic sample. No tax advice implied.
+Reporting cut-off,2026-10-31
+Periods,2025-11-01 to 2026-10-31
+Sales grain,"One row per invoice product line. Join on InvoiceID, ProductID and CustomerID."
+Receivables grain,One row per invoice; balances and ageing computed as of reporting cut-off.
+Payments grain,One synthetic receipt row per invoice with a positive receipt amount; may represent partial or full payment.
+Inventory movements,"Opening, purchase, sale and synthetic adjustment rows. Quantity signs: purchase positive, sale negative."
+Inventory summary,"Synthetic quantity roll-forward at the cut-off. It is illustrative, not a valuation ledger."
+Purchases,One row per purchase order product line.
+Expenses,Monthly synthetic category totals. Expense values are not invoices.
+Quality warning,"All data is synthetic and designed for practice. Do not use it to make real commercial, accounting, tax or investment decisions."
+Analysis caution,"Before calculating margin, confirm cost basis, credits, rebates, landed costs, tax treatment and inventory valuation in any live client dataset."
+Customer / supplier IDs,Fictional IDs created only to test joining and reporting workflows.

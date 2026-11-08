@@ -1,0 +1,109 @@
+﻿ExpenseID,ExpenseDate,Category,Vendor,AmountAED,Currency,CostType,TaxBasisNote
+EXP-202511-WAR,2025-11-28,Warehouse rent,Fictional Vendor 07,18114.92,AED,Variable,Net of recoverable tax as supplied
+EXP-202511-SAL,2025-11-28,Salaries & benefits,Fictional Vendor 03,43167.64,AED,Variable,Net of recoverable tax as supplied
+EXP-202511-DEL,2025-11-28,Delivery & logistics,Fictional Vendor 04,14921.99,AED,Variable,Net of recoverable tax as supplied
+EXP-202511-MAR,2025-11-28,Marketing,Fictional Vendor 02,6376.37,AED,Variable,Net of recoverable tax as supplied
+EXP-202511-UTI,2025-11-28,Utilities,Fictional Vendor 02,4519.58,AED,Variable,Net of recoverable tax as supplied
+EXP-202511-REP,2025-11-28,Repairs & maintenance,Fictional Vendor 02,2611.91,AED,Recurring,Net of recoverable tax as supplied
+EXP-202511-SOF,2025-11-28,Software & communication,Fictional Vendor 02,1974.45,AED,Recurring,Net of recoverable tax as supplied
+EXP-202511-BAN,2025-11-28,Bank & payment charges,Fictional Vendor 06,1628.92,AED,Recurring,Net of recoverable tax as supplied
+EXP-202511-OTH,2025-11-28,Other operating costs,Fictional Vendor 04,3867.76,AED,Recurring,Net of recoverable tax as supplied
+EXP-202512-WAR,2025-12-28,Warehouse rent,Fictional Vendor 01,18810.11,AED,Recurring,Net of recoverable tax as supplied
+EXP-202512-SAL,2025-12-28,Salaries & benefits,Fictional Vendor 06,43475.86,AED,Recurring,Net of recoverable tax as supplied
+EXP-202512-DEL,2025-12-28,Delivery & logistics,Fictional Vendor 08,14080.31,AED,Variable,Net of recoverable tax as supplied
+EXP-202512-MAR,2025-12-28,Marketing,Fictional Vendor 02,6764.03,AED,Recurring,Net of recoverable tax as supplied
+EXP-202512-UTI,2025-12-28,Utilities,Fictional Vendor 03,4128.01,AED,Recurring,Net of recoverable tax as supplied
+EXP-202512-REP,2025-12-28,Repairs & maintenance,Fictional Vendor 02,2637.96,AED,Recurring,Net of recoverable tax as supplied
+EXP-202512-SOF,2025-12-28,Software & communication,Fictional Vendor 02,1831.46,AED,Recurring,Net of recoverable tax as supplied
+EXP-202512-BAN,2025-12-28,Bank & payment charges,Fictional Vendor 04,1702.75,AED,Recurring,Net of recoverable tax as supplied
+EXP-202512-OTH,2025-12-28,Other operating costs,Fictional Vendor 02,3837.29,AED,Variable,Net of recoverable tax as supplied
+EXP-202601-WAR,2026-01-28,Warehouse rent,Fictional Vendor 04,17734.4,AED,Variable,Net of recoverable tax as supplied
+EXP-202601-SAL,2026-01-28,Salaries & benefits,Fictional Vendor 08,44026.5,AED,Recurring,Net of recoverable tax as supplied
+EXP-202601-DEL,2026-01-28,Delivery & logistics,Fictional Vendor 01,14639.58,AED,Variable,Net of recoverable tax as supplied
+EXP-202601-MAR,2026-01-28,Marketing,Fictional Vendor 01,6357.68,AED,Recurring,Net of recoverable tax as supplied
+EXP-202601-UTI,2026-01-28,Utilities,Fictional Vendor 04,4201.52,AED,Variable,Net of recoverable tax as supplied
+EXP-202601-REP,2026-01-28,Repairs & maintenance,Fictional Vendor 04,2433.89,AED,Recurring,Net of recoverable tax as supplied
+EXP-202601-SOF,2026-01-28,Software & communication,Fictional Vendor 02,1967.51,AED,Recurring,Net of recoverable tax as supplied
+EXP-202601-BAN,2026-01-28,Bank & payment charges,Fictional Vendor 06,1663.18,AED,Recurring,Net of recoverable tax as supplied
+EXP-202601-OTH,2026-01-28,Other operating costs,Fictional Vendor 05,3902.44,AED,Variable,Net of recoverable tax as supplied
+EXP-202602-WAR,2026-02-28,Warehouse rent,Fictional Vendor 05,18103.18,AED,Recurring,Net of recoverable tax as supplied
+EXP-202602-SAL,2026-02-28,Salaries & benefits,Fictional Vendor 06,42372.98,AED,Recurring,Net of recoverable tax as supplied
+EXP-202602-DEL,2026-02-28,Delivery & logistics,Fictional Vendor 05,14796.68,AED,Variable,Net of recoverable tax as supplied
+EXP-202602-MAR,2026-02-28,Marketing,Fictional Vendor 02,6794.89,AED,Recurring,Net of recoverable tax as supplied
+EXP-202602-UTI,2026-02-28,Utilities,Fictional Vendor 06,4164.07,AED,Recurring,Net of recoverable tax as supplied
+EXP-202602-REP,2026-02-28,Repairs & maintenance,Fictional Vendor 07,2576.0,AED,Recurring,Net of recoverable tax as supplied
+EXP-202602-SOF,2026-02-28,Software & communication,Fictional Vendor 08,1969.22,AED,Recurring,Net of recoverable tax as supplied
+EXP-202602-BAN,2026-02-28,Bank & payment charges,Fictional Vendor 02,1819.3,AED,Variable,Net of recoverable tax as supplied
+EXP-202602-OTH,2026-02-28,Other operating costs,Fictional Vendor 06,4107.49,AED,Recurring,Net of recoverable tax as supplied
+EXP-202603-WAR,2026-03-28,Warehouse rent,Fictional Vendor 06,18227.02,AED,Variable,Net of recoverable tax as supplied
+EXP-202603-SAL,2026-03-28,Salaries & benefits,Fictional Vendor 08,42219.35,AED,Variable,Net of recoverable tax as supplied
+EXP-202603-DEL,2026-03-28,Delivery & logistics,Fictional Vendor 08,14805.17,AED,Variable,Net of recoverable tax as supplied
+EXP-202603-MAR,2026-03-28,Marketing,Fictional Vendor 04,6670.38,AED,Recurring,Net of recoverable tax as supplied
+EXP-202603-UTI,2026-03-28,Utilities,Fictional Vendor 01,4432.56,AED,Variable,Net of recoverable tax as supplied
+EXP-202603-REP,2026-03-28,Repairs & maintenance,Fictional Vendor 08,2527.48,AED,Variable,Net of recoverable tax as supplied
+EXP-202603-SOF,2026-03-28,Software & communication,Fictional Vendor 07,2029.97,AED,Variable,Net of recoverable tax as supplied
+EXP-202603-BAN,2026-03-28,Bank & payment charges,Fictional Vendor 08,1805.88,AED,Variable,Net of recoverable tax as supplied
+EXP-202603-OTH,2026-03-28,Other operating costs,Fictional Vendor 07,3929.06,AED,Variable,Net of recoverable tax as supplied
+EXP-202604-WAR,2026-04-28,Warehouse rent,Fictional Vendor 03,18980.28,AED,Variable,Net of recoverable tax as supplied
+EXP-202604-SAL,2026-04-28,Salaries & benefits,Fictional Vendor 03,42495.58,AED,Variable,Net of recoverable tax as supplied
+EXP-202604-DEL,2026-04-28,Delivery & logistics,Fictional Vendor 07,14645.47,AED,Recurring,Net of recoverable tax as supplied
+EXP-202604-MAR,2026-04-28,Marketing,Fictional Vendor 03,6408.65,AED,Recurring,Net of recoverable tax as supplied
+EXP-202604-UTI,2026-04-28,Utilities,Fictional Vendor 07,4212.46,AED,Variable,Net of recoverable tax as supplied
+EXP-202604-REP,2026-04-28,Repairs & maintenance,Fictional Vendor 06,2464.55,AED,Recurring,Net of recoverable tax as supplied
+EXP-202604-SOF,2026-04-28,Software & communication,Fictional Vendor 07,1845.72,AED,Recurring,Net of recoverable tax as supplied
+EXP-202604-BAN,2026-04-28,Bank & payment charges,Fictional Vendor 05,1705.19,AED,Recurring,Net of recoverable tax as supplied
+EXP-202604-OTH,2026-04-28,Other operating costs,Fictional Vendor 08,3961.25,AED,Variable,Net of recoverable tax as supplied
+EXP-202605-WAR,2026-05-28,Warehouse rent,Fictional Vendor 03,17961.51,AED,Variable,Net of recoverable tax as supplied
+EXP-202605-SAL,2026-05-28,Salaries & benefits,Fictional Vendor 01,45442.3,AED,Variable,Net of recoverable tax as supplied
+EXP-202605-DEL,2026-05-28,Delivery & logistics,Fictional Vendor 02,15675.9,AED,Variable,Net of recoverable tax as supplied
+EXP-202605-MAR,2026-05-28,Marketing,Fictional Vendor 05,6840.12,AED,Recurring,Net of recoverable tax as supplied
+EXP-202605-UTI,2026-05-28,Utilities,Fictional Vendor 08,4296.94,AED,Recurring,Net of recoverable tax as supplied
+EXP-202605-REP,2026-05-28,Repairs & maintenance,Fictional Vendor 01,2549.24,AED,Variable,Net of recoverable tax as supplied
+EXP-202605-SOF,2026-05-28,Software & communication,Fictional Vendor 06,1983.47,AED,Variable,Net of recoverable tax as supplied
+EXP-202605-BAN,2026-05-28,Bank & payment charges,Fictional Vendor 07,1784.75,AED,Recurring,Net of recoverable tax as supplied
+EXP-202605-OTH,2026-05-28,Other operating costs,Fictional Vendor 05,4161.14,AED,Variable,Net of recoverable tax as supplied
+EXP-202606-WAR,2026-06-28,Warehouse rent,Fictional Vendor 03,18535.02,AED,Variable,Net of recoverable tax as supplied
+EXP-202606-SAL,2026-06-28,Salaries & benefits,Fictional Vendor 08,43702.14,AED,Recurring,Net of recoverable tax as supplied
+EXP-202606-DEL,2026-06-28,Delivery & logistics,Fictional Vendor 06,14189.74,AED,Variable,Net of recoverable tax as supplied
+EXP-202606-MAR,2026-06-28,Marketing,Fictional Vendor 06,6528.8,AED,Recurring,Net of recoverable tax as supplied
+EXP-202606-UTI,2026-06-28,Utilities,Fictional Vendor 06,4641.93,AED,Variable,Net of recoverable tax as supplied
+EXP-202606-REP,2026-06-28,Repairs & maintenance,Fictional Vendor 06,2663.93,AED,Variable,Net of recoverable tax as supplied
+EXP-202606-SOF,2026-06-28,Software & communication,Fictional Vendor 03,2005.58,AED,Variable,Net of recoverable tax as supplied
+EXP-202606-BAN,2026-06-28,Bank & payment charges,Fictional Vendor 04,1810.47,AED,Recurring,Net of recoverable tax as supplied
+EXP-202606-OTH,2026-06-28,Other operating costs,Fictional Vendor 04,4274.28,AED,Variable,Net of recoverable tax as supplied
+EXP-202607-WAR,2026-07-28,Warehouse rent,Fictional Vendor 01,18215.33,AED,Variable,Net of recoverable tax as supplied
+EXP-202607-SAL,2026-07-28,Salaries & benefits,Fictional Vendor 02,43612.98,AED,Variable,Net of recoverable tax as supplied
+EXP-202607-DEL,2026-07-28,Delivery & logistics,Fictional Vendor 06,16498.66,AED,Recurring,Net of recoverable tax as supplied
+EXP-202607-MAR,2026-07-28,Marketing,Fictional Vendor 08,6763.11,AED,Variable,Net of recoverable tax as supplied
+EXP-202607-UTI,2026-07-28,Utilities,Fictional Vendor 07,4248.39,AED,Recurring,Net of recoverable tax as supplied
+EXP-202607-REP,2026-07-28,Repairs & maintenance,Fictional Vendor 05,2675.57,AED,Recurring,Net of recoverable tax as supplied
+EXP-202607-SOF,2026-07-28,Software & communication,Fictional Vendor 01,1941.22,AED,Variable,Net of recoverable tax as supplied
+EXP-202607-BAN,2026-07-28,Bank & payment charges,Fictional Vendor 01,1714.27,AED,Variable,Net of recoverable tax as supplied
+EXP-202607-OTH,2026-07-28,Other operating costs,Fictional Vendor 08,4083.33,AED,Recurring,Net of recoverable tax as supplied
+EXP-202608-WAR,2026-08-28,Warehouse rent,Fictional Vendor 06,18651.69,AED,Variable,Net of recoverable tax as supplied
+EXP-202608-SAL,2026-08-28,Salaries & benefits,Fictional Vendor 04,46052.29,AED,Recurring,Net of recoverable tax as supplied
+EXP-202608-DEL,2026-08-28,Delivery & logistics,Fictional Vendor 02,17200.09,AED,Variable,Net of recoverable tax as supplied
+EXP-202608-MAR,2026-08-28,Marketing,Fictional Vendor 04,7744.5,AED,Variable,Net of recoverable tax as supplied
+EXP-202608-UTI,2026-08-28,Utilities,Fictional Vendor 07,4353.7,AED,Variable,Net of recoverable tax as supplied
+EXP-202608-REP,2026-08-28,Repairs & maintenance,Fictional Vendor 01,2660.11,AED,Variable,Net of recoverable tax as supplied
+EXP-202608-SOF,2026-08-28,Software & communication,Fictional Vendor 03,1926.49,AED,Variable,Net of recoverable tax as supplied
+EXP-202608-BAN,2026-08-28,Bank & payment charges,Fictional Vendor 07,1678.04,AED,Recurring,Net of recoverable tax as supplied
+EXP-202608-OTH,2026-08-28,Other operating costs,Fictional Vendor 03,4104.84,AED,Variable,Net of recoverable tax as supplied
+EXP-202609-WAR,2026-09-28,Warehouse rent,Fictional Vendor 03,18339.26,AED,Variable,Net of recoverable tax as supplied
+EXP-202609-SAL,2026-09-28,Salaries & benefits,Fictional Vendor 02,45140.26,AED,Variable,Net of recoverable tax as supplied
+EXP-202609-DEL,2026-09-28,Delivery & logistics,Fictional Vendor 04,16619.55,AED,Variable,Net of recoverable tax as supplied
+EXP-202609-MAR,2026-09-28,Marketing,Fictional Vendor 03,7399.18,AED,Variable,Net of recoverable tax as supplied
+EXP-202609-UTI,2026-09-28,Utilities,Fictional Vendor 02,4718.73,AED,Recurring,Net of recoverable tax as supplied
+EXP-202609-REP,2026-09-28,Repairs & maintenance,Fictional Vendor 08,2718.17,AED,Variable,Net of recoverable tax as supplied
+EXP-202609-SOF,2026-09-28,Software & communication,Fictional Vendor 07,1908.01,AED,Recurring,Net of recoverable tax as supplied
+EXP-202609-BAN,2026-09-28,Bank & payment charges,Fictional Vendor 06,1801.91,AED,Variable,Net of recoverable tax as supplied
+EXP-202609-OTH,2026-09-28,Other operating costs,Fictional Vendor 01,4033.45,AED,Variable,Net of recoverable tax as supplied
+EXP-202610-WAR,2026-10-28,Warehouse rent,Fictional Vendor 01,17741.55,AED,Recurring,Net of recoverable tax as supplied
+EXP-202610-SAL,2026-10-28,Salaries & benefits,Fictional Vendor 03,45141.75,AED,Variable,Net of recoverable tax as supplied
+EXP-202610-DEL,2026-10-28,Delivery & logistics,Fictional Vendor 02,16208.2,AED,Recurring,Net of recoverable tax as supplied
+EXP-202610-MAR,2026-10-28,Marketing,Fictional Vendor 03,7313.85,AED,Recurring,Net of recoverable tax as supplied
+EXP-202610-UTI,2026-10-28,Utilities,Fictional Vendor 06,4310.1,AED,Variable,Net of recoverable tax as supplied
+EXP-202610-REP,2026-10-28,Repairs & maintenance,Fictional Vendor 07,2576.59,AED,Variable,Net of recoverable tax as supplied
+EXP-202610-SOF,2026-10-28,Software & communication,Fictional Vendor 08,2048.25,AED,Variable,Net of recoverable tax as supplied
+EXP-202610-BAN,2026-10-28,Bank & payment charges,Fictional Vendor 07,1792.48,AED,Variable,Net of recoverable tax as supplied
+EXP-202610-OTH,2026-10-28,Other operating costs,Fictional Vendor 02,4286.27,AED,Recurring,Net of recoverable tax as supplied

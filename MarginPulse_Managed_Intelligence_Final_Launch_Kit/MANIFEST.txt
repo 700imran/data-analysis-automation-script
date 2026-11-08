@@ -1,0 +1,62 @@
+MARGINPULSE MANAGED INTELLIGENCE — FINAL LAUNCH KIT
+
+Top-level files
+- README_START_HERE.md
+- MANIFEST.txt
+
+Brand assets
+- brand_assets/MarginPulse_Managed_Intelligence_Logo.png
+- brand_assets/MarginPulse_Icon.png
+- brand_assets/README_BRAND_ASSETS.md
+
+Website
+- website/index.html
+- website/privacy.html
+- website/terms.html
+- website/404.html
+- website/css/styles.css
+- website/js/app.js
+- website/js/config.js
+- website/assets/marginpulse-managed-intelligence-logo.png
+- website/assets/marginpulse-icon.png
+- website/README_DEPLOYMENT.md
+- website/SETUP_AND_GO_LIVE.md
+
+Client and internal documents
+- documents/00_MarginPulse_Brand_Guidelines.docx
+- documents/01_Service_Profile.docx
+- documents/02_Service_Proposal_Template.docx
+- documents/03_Client_Discovery_Questionnaire.docx
+- documents/04_Data_Requirements_and_Submission_Guide.docx
+- documents/05_Mutual_NDA_Template.docx
+- documents/06_Managed_Intelligence_Service_Agreement_Template.docx
+- documents/07_Statement_of_Work_Template.docx
+- documents/08_Invoice_Template.docx
+- documents/09_Client_Onboarding_Checklist.docx
+- documents/10_Internal_Data_Handling_Policy.docx
+- documents/11_Privacy_Notice_Draft.docx
+- documents/12_Website_Terms_Draft.docx
+- documents/13_Monthly_Management_Report_Template.docx
+- documents/14_Internal_Operations_Playbook.docx
+- documents/DOCUMENTS_README.md
+
+Operations
+- operations/MarginPulse_Operations_Control_Centre.xlsx
+- operations/README_OPERATIONS.md
+
+Synthetic data and CRM
+- dummy_data/MarginPulse_UAE_Distributor_Dummy_Data.xlsx
+- dummy_data/MarginPulse_Lead_CRM_Template.xlsx
+- dummy_data/DUMMY_DATA_README.md
+- dummy_data/ReadMe.csv
+- dummy_data/Data_Dictionary.csv
+- dummy_data/Products.csv
+- dummy_data/Customers.csv
+- dummy_data/Suppliers.csv
+- dummy_data/Sales.csv
+- dummy_data/Purchases.csv
+- dummy_data/Expenses.csv
+- dummy_data/Inventory_Movements.csv
+- dummy_data/Inventory_Summary.csv
+- dummy_data/Receivables.csv
+- dummy_data/Payments.csv

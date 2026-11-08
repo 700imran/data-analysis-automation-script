@@ -1,0 +1,31 @@
+﻿ProductID,ProductName,Category,UOM,PrimarySupplierID,StandardUnitCostAED,ListSellingPriceAED,ReorderLevelUnits,Active
+PRD001,Sparkling Water 500ml,Beverages,Each,SUP011,3.0,5.5,80,Yes
+PRD002,Juice Mango 1L,Beverages,Each,SUP001,2.0,4.2,120,Yes
+PRD003,Cola Can 330ml,Beverages,Each,SUP004,1.8,3.2,100,Yes
+PRD004,Energy Drink 250ml,Beverages,Each,SUP003,2.7,5.4,80,Yes
+PRD005,Mineral Water 1.5L,Beverages,Each,SUP011,1.2,2.2,180,Yes
+PRD006,Basmati Rice 5kg,Packaged Food,Pack,SUP002,11.0,15.5,180,Yes
+PRD007,Cooking Oil 5L,Packaged Food,Pack,SUP007,17.0,23.0,80,Yes
+PRD008,Tomato Paste 400g,Packaged Food,Pack,SUP001,2.5,4.0,80,Yes
+PRD009,Pasta 500g,Packaged Food,Pack,SUP004,3.2,5.0,100,Yes
+PRD010,Canned Beans 400g,Packaged Food,Pack,SUP009,2.4,3.8,180,Yes
+PRD011,Laundry Detergent 2kg,Home Care,Each,SUP001,8.5,12.0,180,Yes
+PRD012,Dishwash Liquid 1L,Home Care,Each,SUP004,4.2,6.3,180,Yes
+PRD013,Surface Cleaner 1L,Home Care,Each,SUP007,3.8,6.2,100,Yes
+PRD014,Tissue Box 5-pack,Home Care,Each,SUP008,5.0,7.5,180,Yes
+PRD015,Garbage Bags 30-pack,Home Care,Each,SUP005,4.0,6.0,80,Yes
+PRD016,Shampoo 400ml,Personal Care,Each,SUP003,8.0,12.0,150,Yes
+PRD017,Body Wash 500ml,Personal Care,Each,SUP006,7.0,10.5,120,Yes
+PRD018,Toothpaste 150g,Personal Care,Each,SUP003,2.8,4.7,100,Yes
+PRD019,Hand Soap 500ml,Personal Care,Each,SUP006,3.2,5.2,80,Yes
+PRD020,Deodorant 150ml,Personal Care,Each,SUP002,5.0,8.0,150,Yes
+PRD021,Potato Chips 150g,Snacks,Each,SUP002,2.0,3.6,120,Yes
+PRD022,Biscuits 300g,Snacks,Each,SUP006,3.0,5.4,180,Yes
+PRD023,Chocolate Bar 45g,Snacks,Each,SUP005,1.2,2.5,80,Yes
+PRD024,Mixed Nuts 250g,Snacks,Each,SUP012,8.0,12.5,150,Yes
+PRD025,Crackers 200g,Snacks,Each,SUP009,2.8,4.6,80,Yes
+PRD026,UHT Milk 1L,Dairy & Chilled,Each,SUP007,3.0,4.5,80,Yes
+PRD027,Cheese Slices 200g,Dairy & Chilled,Each,SUP009,5.5,8.5,120,Yes
+PRD028,Yogurt 1kg,Dairy & Chilled,Each,SUP011,4.0,6.0,180,Yes
+PRD029,Butter 200g,Dairy & Chilled,Each,SUP006,3.6,5.4,180,Yes
+PRD030,Cream 250ml,Dairy & Chilled,Each,SUP004,3.0,4.8,80,Yes

@@ -50,3 +50,15 @@ This suite automates analytics end‑to‑end, cutting cost and time while impro
 Upside: Speed, consistency, scalability.
 
 Downside: Relies on clean data and stable APIs; requires maintenance for edge cases.
+
+---
+
+## Repository Map
+
+| Path | What it is | Status |
+|---|---|---|
+| Root `*.py`, `*.ipynb`, `*.md` | Data Analysis Automation Suite (sections above) | Original content, unchanged |
+| `marginpulse_intelligence_engine/` | MarginPulse Intelligence Engine v0.1.0: Python engine, FastAPI service, CLI, demo datasets, docs, tests | Prototype. 8 unit/API tests pass; see its `docs/SECURITY_AND_PRODUCTION_GATE.md` before any real client data or public deployment |
+| `MarginPulse_Managed_Intelligence_Final_Launch_Kit/` | Service launch kit: brand assets, 15 templates/policies (`documents/`), static website, operations tracker, dummy data | Templates and drafts. Legal documents (NDA, agreement, privacy, terms) need review by a qualified professional before use |
+
+All data in the launch kit's `dummy_data/` and the engine's `examples/` is synthetic. Never commit `.env` files or client data.

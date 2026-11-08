@@ -1,0 +1,8 @@
+{
+  "client_id": "demo-service-company",
+  "profile": "service",
+  "country": "India",
+  "currency": "INR",
+  "as_of_date": "2026-10-31",
+  "dataset_map": {"client_export.xlsx::Revenue Register": "sales", "client_export.xlsx::Operating Costs": "expenses", "client_export.xlsx::Project Register": "service_projects", "client_export.xlsx::Time Entries": "timesheets"}
+}

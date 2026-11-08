@@ -1,0 +1,8 @@
+{
+  "client_id": "demo-retailer-india",
+  "profile": "retailer",
+  "country": "India",
+  "currency": "INR",
+  "as_of_date": "2026-10-31",
+  "thresholds": {"revenue_decline_pct": 10, "margin_decline_pp": 2, "expense_increase_pct": 15, "overdue_share_pct": 30}
+}

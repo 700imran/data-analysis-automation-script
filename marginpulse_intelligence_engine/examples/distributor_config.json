@@ -1,0 +1,15 @@
+{
+  "client_id": "demo-uae-distributor",
+  "profile": "distributor",
+  "country": "UAE",
+  "currency": "AED",
+  "as_of_date": "2026-10-31",
+  "thresholds": {
+    "revenue_decline_pct": 10,
+    "margin_decline_pp": 2,
+    "expense_increase_pct": 15,
+    "overdue_share_pct": 30,
+    "top5_customer_share_pct": 50,
+    "supplier_price_increase_pct": 8
+  }
+}

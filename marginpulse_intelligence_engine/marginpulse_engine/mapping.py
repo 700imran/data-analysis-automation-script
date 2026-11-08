@@ -19,12 +19,14 @@ def _numeric(series: pd.Series) -> pd.Series:
     return pd.to_numeric(cleaned, errors="coerce")
 
 
-def map_dataset(df: pd.DataFrame, dataset: str, overrides: dict[str, str] | None = None) -> tuple[pd.DataFrame, dict]:
+def map_dataset(df: pd.DataFrame, dataset: str, overrides: dict[str, str] | None = None, dayfirst: bool = True) -> tuple[pd.DataFrame, dict]:
     if dataset not in FIELD_ALIASES:
         raise ValueError(f"Unknown dataset type: {dataset}")
     source = df.copy()
     source.columns = [str(c).strip() for c in source.columns]
     normalized_lookup = {normalize_name(c): c for c in source.columns}
+    # Fallback lookup ignoring underscores so "COGSAED" matches alias "cogs_aed" (all-caps headers lose word breaks).
+    compact_lookup = {k.replace("_", ""): v for k, v in normalized_lookup.items()}
     aliases = FIELD_ALIASES[dataset]
     overrides = overrides or {}
     mapping: dict[str, str] = {}
@@ -39,17 +41,23 @@ def map_dataset(df: pd.DataFrame, dataset: str, overrides: dict[str, str] | None
             if key in normalized_lookup:
                 mapping[canonical] = normalized_lookup[key]
                 break
+        else:
+            for candidate in candidates:
+                compact = normalize_name(candidate).replace("_", "")
+                if compact in compact_lookup and compact_lookup[compact] not in mapping.values():
+                    mapping[canonical] = compact_lookup[compact]
+                    break
     out = pd.DataFrame(index=source.index)
     for canonical, original in mapping.items():
         out[canonical] = source[original]
     # Parse dates and numeric-like fields but preserve missing values; never fill unknown finance values with zero.
     date_fields = {"transaction_date", "invoice_date", "due_date", "snapshot_date", "last_sale_date", "start_date", "end_date", "work_date"}
     numeric_fields = {
-        "quantity", "unit_price", "discount", "revenue", "unit_cost", "cogs", "gross_profit", "quantity_returned", "return_amount", "purchase_value", "amount", "quantity_delta", "opening_quantity", "received_quantity", "sold_quantity", "adjustment_quantity", "closing_quantity", "reorder_level", "inventory_value", "days_since_last_sale", "invoice_amount", "paid_amount", "outstanding_amount", "credit_limit", "payment_terms_days", "selling_price", "project_revenue", "project_cost", "hours", "billable_hours", "hourly_cost", "billable_amount"
+        "tax_amount", "quantity", "unit_price", "discount", "revenue", "unit_cost", "cogs", "gross_profit", "quantity_returned", "return_amount", "purchase_value", "amount", "quantity_delta", "opening_quantity", "received_quantity", "sold_quantity", "adjustment_quantity", "closing_quantity", "reorder_level", "inventory_value", "days_since_last_sale", "invoice_amount", "paid_amount", "outstanding_amount", "credit_limit", "payment_terms_days", "selling_price", "project_revenue", "project_cost", "hours", "billable_hours", "hourly_cost", "billable_amount"
     }
     for col in out.columns:
         if col in date_fields:
-            out[col] = pd.to_datetime(out[col], errors="coerce", dayfirst=False)
+            out[col] = pd.to_datetime(out[col], errors="coerce", dayfirst=dayfirst)
         elif col in numeric_fields:
             out[col] = _numeric(out[col])
         elif out[col].dtype == "object":
@@ -84,7 +92,7 @@ def map_dataset(df: pd.DataFrame, dataset: str, overrides: dict[str, str] | None
         "missing_required_fields": required_all_null,
         "missing_required_value_counts": required_missing_counts,
         "missing_values_by_field": {c: int(out[c].isna().sum()) for c in out.columns if out[c].isna().any()},
-        "duplicate_rows": int(out.duplicated().sum()),
+        "duplicate_rows": int(source.duplicated().sum()),  # all source columns, so unmapped IDs distinguish genuine repeats
         "status": status,
     }
     return out, quality

@@ -13,7 +13,7 @@ load_dotenv()
 app = FastAPI(
     title="MarginPulse Intelligence Engine API",
     description="Configurable business intelligence for distributors, retailers and selected service businesses.",
-    version="0.1.0",
+    version="0.1.1",
 )
 STORAGE_ROOT = Path(os.getenv("MARGINPULSE_STORAGE", "./storage")).resolve()
 API_KEY = os.getenv("MARGINPULSE_API_KEY", "local-dev-key-change-before-deployment")
@@ -25,7 +25,7 @@ def _auth(x_api_key: str | None) -> None:
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "service": "MarginPulse Intelligence Engine", "version": "0.1.0"}
+    return {"status": "ok", "service": "MarginPulse Intelligence Engine", "version": "0.1.1"}
 
 @app.get("/api/v1/modules")
 def list_modules(x_api_key: str | None = Header(default=None)):

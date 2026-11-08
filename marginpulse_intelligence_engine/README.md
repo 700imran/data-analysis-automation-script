@@ -1,6 +1,6 @@
 # MarginPulse Configurable Business Intelligence Engine
 
-Version: 0.1.0 (pilot / controlled validation build)
+Version: 0.1.1 (pilot / controlled validation build)
 
 A single configurable Python engine for distributors, retailers and selected service businesses. It reads CSV/XLSX datasets, maps different client column names into a canonical model, validates data, activates available analysis modules, creates traceable management findings and exports tidy CSV tables for Power BI.
 
@@ -63,7 +63,7 @@ Open `http://127.0.0.1:8000/docs`. Supply `X-API-Key` for protected endpoints.
 python -m marginpulse_engine.cli --files examples/distributor_demo.xlsx --client-id demo-uae-distributor --profile distributor --currency AED --country UAE --as-of-date 2026-10-31 --output-root .\storage
 ```
 
-The included synthetic distributor workbook exercises the distributor pipeline. Its source gross-profit column contains line-level differences versus `revenue - cogs`; the reconciliation module flags these instead of rewriting the source figures. This is an intentional demonstration of exception reporting, not a statement that the input is fully reconciled.
+The included synthetic distributor workbook exercises the distributor pipeline. Its figures reconcile across sales, receivables, payments and the inventory ledger. Two deliberate data-integrity exceptions remain for demonstration: four products have negative closing stock, and supplied expenses are about 10x gross profit (synthetic data, not a realistic cost base). The engine flags both rather than adjusting the source figures.
 
 The engine writes:
 
@@ -123,6 +123,7 @@ Example config:
 - `column_mappings` maps canonical field names to exact source column names per dataset.
 - `thresholds` controls alert thresholds; default values are screening rules, not industry benchmarks.
 - `currency` labels output values. No foreign-exchange conversion is performed. Do not combine multi-currency records without a separate, dated FX conversion process.
+- `dayfirst` (default `true`) controls how ambiguous dates such as 05/10/2026 are read (5 October). Set `false` for month-first sources. ISO dates (2026-10-05) are unaffected.
 - `as_of_date` determines receivables/payables ageing and inventory review dates. Use the client's reporting cut-off, not the machine date.
 
 ## Interconnected model
@@ -141,7 +142,7 @@ If a source does not provide stable IDs, it can still be analysed at transaction
 
 ## Tests
 
-The package includes eight automated tests covering distributor, retailer and service examples, dynamic column overrides, missing-cost safety, protected API access, upload and ZIP download. Run:
+The package includes 15 automated tests covering distributor, retailer and service examples, dynamic column overrides, missing-cost safety, protected API access, upload and ZIP download, plus regression tests that compare engine totals with independently calculated figures. Run:
 
 ```bash
 pytest -q

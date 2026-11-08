@@ -14,7 +14,7 @@ from .analysis import (
 )
 from .registry import PROFILES
 
-ENGINE_VERSION = "0.1.0"
+ENGINE_VERSION = "0.1.1"
 
 
 def _dataset_from_frame(file_name: str, sheet_name: str, config: dict) -> str | None:
@@ -41,7 +41,7 @@ def _collect_frames(files: list[tuple[str, list[tuple[str, pd.DataFrame]]]], con
             if not dataset:
                 ignored.append({"file": file_name, "sheet": sheet_name, "reason": "Dataset type not recognised. Add it to dataset_map in client config."})
                 continue
-            mapped, qa = map_dataset(frame, dataset, overrides.get(dataset, {}))
+            mapped, qa = map_dataset(frame, dataset, overrides.get(dataset, {}), dayfirst=bool(config.get("dayfirst", True)))
             qa["source_file"] = file_name
             qa["source_sheet"] = sheet_name
             quality.append(qa)
@@ -239,6 +239,17 @@ def analyze_frames(
             item["available"] = False
             item["reason"] = "Required data exists but this module could not calculate a valid result. Review data quality."
     insights = build_insights(tables, module_results, as_of, config.get("thresholds", {}))
+    for qa in data_quality:
+        missing_req = qa.get("missing_required_fields") or []
+        if missing_req:
+            insights.insert(0, {"insight_id": "DQ_REQUIRED_001", "severity": "high", "title": "Required fields not mapped", "finding": f"{qa.get('dataset')} ({qa.get('source_sheet')}) has no mapped column for: {', '.join(missing_req)}. Analyses that depend on them (for example monthly trends or joins) are unavailable or incomplete.", "evidence": {"dataset": qa.get("dataset"), "missing_required_fields": missing_req, "unmapped_source_columns": qa.get("unmapped_source_columns", [])}, "recommended_action": "Map the correct source columns in the client config (column_mappings) and re-run before using any result.", "limitation": "Automatic header matching cannot recognise every naming convention."})
+        rev_src = str((qa.get("mapped_fields") or {}).get("revenue", ""))
+        if rev_src.startswith("<derived"):
+            hints = [c for c in qa.get("unmapped_source_columns", []) if any(k in str(c).lower() for k in ("disc", "tax", "net", "amount", "value"))]
+            insights.insert(0, {"insight_id": "DQ_DERIVED_REV_001", "severity": "high", "title": "Revenue was derived, not read from the source", "finding": f"{qa.get('dataset')} revenue was calculated as {rev_src}. Source columns that may hold the real figure were not used: {', '.join(map(str, hints)) or 'none identified'}.", "evidence": {"dataset": qa.get("dataset"), "revenue_source": rev_src, "candidate_unmapped_columns": hints}, "recommended_action": "Confirm which column is net revenue and map it explicitly; a derived figure can differ from the books (for example if discounts or taxes are handled in other columns).", "limitation": "Derived revenue is only as complete as the columns the engine could recognise."})
+        dups = int(qa.get("duplicate_rows", 0) or 0)
+        if dups > 0:
+            insights.append({"insight_id": "DQ_DUP_001", "severity": "medium", "title": "Duplicate rows detected", "finding": f"{dups} fully duplicated rows were found in {qa.get('source_sheet') or qa.get('dataset')} ({qa.get('dataset')}). They are NOT removed, so totals include them.", "evidence": {"dataset": qa.get("dataset"), "source_file": qa.get("source_file"), "source_sheet": qa.get("source_sheet"), "duplicate_rows": dups}, "recommended_action": "Confirm with the client whether these are genuine repeated lines or double-exported records, then re-run on corrected data.", "limitation": "Identical rows can be legitimate (e.g. repeated identical purchases); the engine does not delete or adjust source records automatically."})
 
     analysis_id = analysis_id or uuid.uuid4().hex[:12]
     client_root = Path(output_root).resolve() / client_id

@@ -161,7 +161,7 @@ def calculate_inventory(tables: dict[str, pd.DataFrame], snapshot: pd.Timestamp)
     inv["closing_quantity"] = _num(inv, "closing_quantity")
     if "reorder_level" in inv.columns:
         inv["reorder_level"] = _num(inv, "reorder_level")
-        inv["below_reorder"] = inv["closing_quantity"] < inv["reorder_level"]
+        inv["below_reorder"] = (inv["closing_quantity"] >= 0) & (inv["closing_quantity"] < inv["reorder_level"])
     if "inventory_value" not in inv.columns and "unit_cost" in inv.columns:
         inv["inventory_value"] = inv["closing_quantity"] * _num(inv, "unit_cost")
     if "days_since_last_sale" not in inv.columns and "last_sale_date" in inv.columns:
@@ -169,6 +169,10 @@ def calculate_inventory(tables: dict[str, pd.DataFrame], snapshot: pd.Timestamp)
     result = {"stock_items": int(inv["product_id"].nunique(dropna=True)) if "product_id" in inv.columns else int(len(inv)), "closing_units": _money(inv["closing_quantity"].sum(min_count=1))}
     if "inventory_value" in inv.columns:
         result["indicative_inventory_value"] = _money(_num(inv, "inventory_value").sum(min_count=1))
+    inv["negative_stock"] = inv["closing_quantity"] < 0
+    result["items_negative_stock"] = int(inv["negative_stock"].sum())
+    if "inventory_value" in inv.columns:
+        result["negative_stock_value"] = _money(_num(inv.loc[inv["negative_stock"]], "inventory_value").sum(min_count=1))
     if "below_reorder" in inv.columns:
         result["items_below_reorder"] = int(inv["below_reorder"].sum())
     if "days_since_last_sale" in inv.columns:
@@ -215,7 +219,27 @@ def calculate_procurement(tables: dict[str, pd.DataFrame]) -> dict:
         p["unit_cost"] = _num(p, "unit_cost")
         keys = [c for c in ["product_id", "supplier_id", "period"] if c in p.columns]
         if keys:
-            result["unit_cost_trends"] = _records(p.groupby(keys, dropna=False, as_index=False)["unit_cost"].mean().sort_values("period" if "period" in keys else keys[0]))
+            qty = _num(p, "quantity") if "quantity" in p.columns else None
+            if qty is not None and qty.notna().any():
+                # Quantity-weighted average cost (sum(cost*qty)/sum(qty)); a simple mean of line costs mis-weights small and large lines.
+                p["_w_cost"] = p["unit_cost"] * qty
+                p["_w_qty"] = qty.where(p["unit_cost"].notna())
+                g = p.groupby(keys, dropna=False, as_index=False).agg(_w_cost=("_w_cost", "sum"), _w_qty=("_w_qty", "sum"))
+                g["unit_cost"] = np.where(g["_w_qty"] > 0, g["_w_cost"] / g["_w_qty"], np.nan)
+                trends = g.drop(columns=["_w_cost", "_w_qty"])
+            else:
+                trends = p.groupby(keys, dropna=False, as_index=False)["unit_cost"].mean()
+            result["unit_cost_trends"] = _records(trends.sort_values("period" if "period" in keys else keys[0]))
+            if "product_id" in keys and "period" in keys:
+                # Product-level monthly cost across suppliers, quantity-weighted when quantity exists; used for price-change findings.
+                pk = ["product_id", "period"]
+                if qty is not None and qty.notna().any():
+                    gp_ = p.groupby(pk, dropna=False, as_index=False).agg(_w_cost=("_w_cost", "sum"), _w_qty=("_w_qty", "sum"))
+                    gp_["unit_cost"] = np.where(gp_["_w_qty"] > 0, gp_["_w_cost"] / gp_["_w_qty"], np.nan)
+                    gp_ = gp_.drop(columns=["_w_cost", "_w_qty"])
+                else:
+                    gp_ = p.groupby(pk, dropna=False, as_index=False)["unit_cost"].mean()
+                result["unit_cost_trends_by_product"] = _records(gp_.sort_values(pk))
     return result
 
 
@@ -328,14 +352,18 @@ def calculate_reconciliations(tables: dict[str, pd.DataFrame]) -> dict:
     sales = tables.get("sales", pd.DataFrame()).copy()
     ar = tables.get("receivables", pd.DataFrame()).copy()
     if not sales.empty and not ar.empty and {"invoice_id", "revenue"}.issubset(sales.columns) and {"invoice_id", "invoice_amount"}.issubset(ar.columns):
-        left = sales.dropna(subset=["invoice_id"]).groupby("invoice_id", as_index=False)["revenue"].sum(min_count=1).rename(columns={"revenue": "sales_revenue"})
+        sales_basis = sales.copy()
+        if "tax_amount" in sales_basis.columns and sales_basis["tax_amount"].notna().any():
+            # Receivable invoices carry tax (GST/VAT); compare like-for-like by adding the supplied tax to net revenue.
+            sales_basis["revenue"] = _num(sales_basis, "revenue") + _num(sales_basis, "tax_amount").fillna(0)
+        left = sales_basis.dropna(subset=["invoice_id"]).groupby("invoice_id", as_index=False)["revenue"].sum(min_count=1).rename(columns={"revenue": "sales_revenue"})
         right = ar.dropna(subset=["invoice_id"]).groupby("invoice_id", as_index=False)["invoice_amount"].sum(min_count=1)
         joined = left.merge(right, on="invoice_id", how="inner")
         if not joined.empty:
             joined["variance"] = _num(joined, "sales_revenue") - _num(joined, "invoice_amount")
             joined["variance_abs"] = joined["variance"].abs()
-            mismatch = joined[joined["variance_abs"] > 1.0]
-            checks.append({"check": "sales_vs_receivables_invoice_amount", "matched_invoices": int(len(joined)), "mismatched_invoices": int(len(mismatch)), "absolute_variance_total": _money(mismatch["variance_abs"].sum()), "status": "review" if len(mismatch) else "passed", "tolerance": 1.0})
+            mismatch = joined[joined["variance_abs"] > 0.05]
+            checks.append({"check": "sales_vs_receivables_invoice_amount", "matched_invoices": int(len(joined)), "mismatched_invoices": int(len(mismatch)), "absolute_variance_total": _money(mismatch["variance_abs"].sum()), "status": "review" if len(mismatch) else "passed", "tolerance": 0.05})
             detail_tables["sales_vs_receivables"] = _records(joined.sort_values("variance_abs", ascending=False).head(100))
         payments = tables.get("payments", pd.DataFrame()).copy()
         if not payments.empty and {"invoice_id", "amount"}.issubset(payments.columns) and "paid_amount" in ar.columns:
@@ -345,8 +373,8 @@ def calculate_reconciliations(tables: dict[str, pd.DataFrame]) -> dict:
             if not pjoin.empty:
                 pjoin["variance"] = _num(pjoin, "paid_amount") - _num(pjoin, "payment_register_total")
                 pjoin["variance_abs"] = pjoin["variance"].abs()
-                pmismatch = pjoin[pjoin["variance_abs"] > 1.0]
-                checks.append({"check": "receivables_paid_vs_payment_register", "matched_invoices": int(len(pjoin)), "mismatched_invoices": int(len(pmismatch)), "absolute_variance_total": _money(pmismatch["variance_abs"].sum()), "status": "review" if len(pmismatch) else "passed", "tolerance": 1.0})
+                pmismatch = pjoin[pjoin["variance_abs"] > 0.05]
+                checks.append({"check": "receivables_paid_vs_payment_register", "matched_invoices": int(len(pjoin)), "mismatched_invoices": int(len(pmismatch)), "absolute_variance_total": _money(pmismatch["variance_abs"].sum()), "status": "review" if len(pmismatch) else "passed", "tolerance": 0.05})
                 detail_tables["paid_vs_payment_register"] = _records(pjoin.sort_values("variance_abs", ascending=False).head(100))
     inv = tables.get("inventory_snapshot", pd.DataFrame()).copy()
     movements = tables.get("inventory_movements", pd.DataFrame()).copy()
@@ -367,9 +395,15 @@ def calculate_reconciliations(tables: dict[str, pd.DataFrame]) -> dict:
             check["calculated_gross_profit"] = _num(check, "revenue") - _num(check, "cogs")
             check["variance"] = _num(check, "gross_profit") - check["calculated_gross_profit"]
             check["variance_abs"] = check["variance"].abs()
-            mismatch = check[check["variance_abs"] > 0.01]
-            checks.append({"check": "source_gross_profit_vs_recalculated", "matched_rows": int(len(check)), "mismatched_rows": int(len(mismatch)), "absolute_variance_total": _money(mismatch["variance_abs"].sum()), "status": "review" if len(mismatch) else "passed", "tolerance": 0.01})
+            mismatch = check[check["variance_abs"] > 0.015]
+            checks.append({"check": "source_gross_profit_vs_recalculated", "matched_rows": int(len(check) - len(mismatch)), "mismatched_rows": int(len(mismatch)), "absolute_variance_total": _money(mismatch["variance_abs"].sum()), "status": "review" if len(mismatch) else "passed", "tolerance": 0.015})
             detail_tables["gross_profit_reconciliation"] = _records(check.sort_values("variance_abs", ascending=False).head(100))
+    if not inv.empty and {"product_id", "closing_quantity"}.issubset(inv.columns):
+        neg = inv.assign(closing_quantity=_num(inv, "closing_quantity"))
+        neg = neg[neg["closing_quantity"] < 0]
+        checks.append({"check": "inventory_no_negative_closing_stock", "checked_products": int(inv["product_id"].nunique()), "negative_stock_products": int(neg["product_id"].nunique()), "status": "review" if len(neg) else "passed"})
+        if len(neg):
+            detail_tables["negative_stock"] = _records(neg[[c for c in ["product_id", "product_name", "closing_quantity"] if c in neg.columns]].sort_values("closing_quantity").head(100))
     if not checks:
         return {}
     return {"checks": checks, "check_count": len(checks), "checks_requiring_review": sum(1 for c in checks if c["status"] == "review"), "details": detail_tables}
@@ -424,12 +458,34 @@ def build_insights(tables: dict[str, pd.DataFrame], module_results: dict, as_of:
                 add("COST_TREND_001", "medium", "Expenses increased materially", f"Supplied expenses increased {change:.1f}% versus the previous available month.", {"current_period": last.get("period"), "current_expenses": _money(last.get("amount")), "previous_expenses": _money(prev.get("amount")), "change_pct": round(change, 2)}, "Review category-level movements and validate whether the increase is recurring, seasonal or one-off.", "Expense completeness and accounting cut-off have not been independently verified.")
     ar = module_results.get("receivables_intelligence", {})
     overdue_share = ar.get("overdue_share_pct")
+    rec = tables.get("receivables", pd.DataFrame())
+    if not rec.empty and {"customer_id", "due_date", "outstanding_amount"}.issubset(rec.columns):
+        r_ = rec.copy(); r_["outstanding_amount"] = _num(r_, "outstanding_amount")
+        od = r_[(pd.to_datetime(r_["due_date"], errors="coerce") < as_of) & (r_["outstanding_amount"] > 0)].copy()
+        if not od.empty and od["outstanding_amount"].sum() > 0:
+            od["days_overdue"] = (as_of - pd.to_datetime(od["due_date"])).dt.days
+            by = od.groupby("customer_id").agg(overdue=("outstanding_amount", "sum"), oldest_days=("days_overdue", "max"), invoices=("outstanding_amount", "size")).sort_values("overdue", ascending=False)
+            total_od = float(by["overdue"].sum()); top_id = by.index[0]; top = by.iloc[0]; share = top["overdue"] / total_od * 100
+            names = tables.get("customers", pd.DataFrame())
+            label = top_id
+            if not names.empty and {"customer_id", "customer_name"}.issubset(names.columns):
+                hit = names.loc[names["customer_id"] == top_id, "customer_name"]
+                label = f"{hit.iloc[0]} ({top_id})" if len(hit) else top_id
+            if share >= float(thresholds.get("customer_overdue_share_pct", 15)) and top["oldest_days"] > 60:
+                add("AR_CUST_001", "high", "Single customer holds a large share of overdue receivables", f"{label} accounts for {share:.1f}% of overdue receivables ({_money(top['overdue']):,.2f} across {int(top['invoices'])} invoices, oldest {int(top['oldest_days'])} days overdue).", {"customer_id": top_id, "customer_overdue": _money(top["overdue"]), "share_of_overdue_pct": round(float(share), 2), "oldest_days_overdue": int(top["oldest_days"]), "total_overdue": _money(total_od)}, "Review the account with the client: confirm disputes, stop-supply or credit-limit action, and whether a provision or follow-up plan is needed.", "Based on supplied due dates and balances only; does not know about agreed payment plans or disputes.")
     if overdue_share is not None and overdue_share >= float(thresholds.get("overdue_share_pct", 30)):
         add("AR_AGE_001", "high", "Overdue receivables concentration", f"{overdue_share:.1f}% of supplied outstanding receivables are overdue as of {as_of.date()}.", {"outstanding_total": ar.get("outstanding_total"), "overdue_total": ar.get("overdue_total"), "overdue_share_pct": overdue_share}, "Prioritise collection review by overdue amount, days past due, customer credit exposure and dispute status.", "Ageing is calculated from due dates and outstanding amounts supplied by the client.")
     inv = module_results.get("inventory_intelligence", {})
     low = inv.get("items_below_reorder")
     if low is not None and low > 0:
         add("INV_LOW_001", "medium", "Items below configured reorder level", f"{low} products are below their supplied reorder level.", {"items_below_reorder": low}, "Review demand, supplier lead times, open purchase orders and service levels before replenishing.", "Reorder recommendations are not calculated without validated lead times, open orders and demand assumptions.")
+    neg_items = inv.get("items_negative_stock")
+    if neg_items:
+        add("INV_NEG_001", "high", "Negative closing stock recorded", f"{neg_items} products show negative closing stock, which is not physically possible.", {"items_negative_stock": neg_items, "negative_stock_value": inv.get("negative_stock_value")}, "Check for unrecorded receipts, sales posted against the wrong product, missing opening balances or cut-off errors before relying on stock value or reorder decisions.", "Indicative stock value nets negative items against positive ones and is therefore understated until these are corrected.")
+    fp = module_results.get("financial_performance", {}).get("kpis", {})
+    gp, opex = fp.get("gross_profit_total"), fp.get("expenses_total")
+    if gp is not None and opex is not None and gp > 0 and opex > gp and float(fp.get("gross_profit_data_coverage_pct", 0) or 0) >= 95:
+        add("OPEX_COVER_001", "high", "Supplied expenses exceed gross profit", f"Supplied expenses ({opex:,.2f}) are {opex / gp:.1f}x gross profit ({gp:,.2f}) for the period.", {"gross_profit_total": gp, "expenses_total": opex, "gross_profit_less_supplied_expenses": fp.get("gross_profit_less_supplied_expenses")}, "Confirm the expense ledger covers the same entity and period as sales, excludes capital items and inter-company transfers, and that sales are complete before drawing conclusions.", "Compares supplied records only; may reflect incomplete sales data, mismatched periods or non-operating items rather than a true operating loss.")
     slow = inv.get("items_no_sale_90_days")
     if slow is not None and slow > 0:
         add("INV_SLOW_001", "medium", "Products with no recorded sale for 90+ days", f"{slow} products have no recorded sale for at least 90 days.", {"items_no_sale_90_days": slow}, "Review stock ageing, seasonality, product lifecycle, returns and alternate sales channels before markdown or disposal.", "This check uses supplied last-sale dates or derived sales movements; incomplete sales history can overstate ageing.")
@@ -438,11 +494,17 @@ def build_insights(tables: dict[str, pd.DataFrame], module_results: dict, as_of:
     if concentration is not None and concentration >= float(thresholds.get("top5_customer_share_pct", 50)):
         add("CUST_CONC_001", "medium", "Customer revenue concentration", f"The top five customers account for {concentration:.1f}% of supplied revenue.", {"top_5_customer_revenue_share_pct": concentration}, "Review exposure, credit terms, retention plans and diversification options.", "Customer concentration is calculated only where stable customer IDs are supplied.")
     procurement = module_results.get("procurement_intelligence", {})
-    trends = pd.DataFrame(procurement.get("unit_cost_trends", []))
+    trends = pd.DataFrame(procurement.get("unit_cost_trends_by_product", []))
     if len(trends) and {"period", "unit_cost", "product_id"}.issubset(trends.columns):
         for product, group in trends.dropna(subset=["period", "unit_cost"]).groupby("product_id"):
             group = group.sort_values("period")
             if len(group) >= 2 and float(group.iloc[-2]["unit_cost"]) > 0:
+                try:
+                    gap = (pd.Period(group.iloc[-1]["period"], "M") - pd.Period(group.iloc[-2]["period"], "M")).n
+                except Exception:
+                    gap = 1
+                if gap != 1:
+                    continue  # only compare consecutive months; a gap would not be like-for-like
                 change = (float(group.iloc[-1]["unit_cost"]) / float(group.iloc[-2]["unit_cost"]) - 1) * 100
                 if change >= float(thresholds.get("supplier_price_increase_pct", 8)):
                     add("PROC_PRICE_001", "medium", "Purchase unit cost increased", f"Average purchase unit cost for product {product} increased {change:.1f}% in the latest compared month.", {"product_id": str(product), "latest_period": group.iloc[-1]["period"], "previous_unit_cost": _money(group.iloc[-2]["unit_cost"]), "latest_unit_cost": _money(group.iloc[-1]["unit_cost"]), "change_pct": round(change, 2)}, "Validate like-for-like unit, supplier, currency, quantity breaks and product specifications before renegotiating.", "Like-for-like comparison depends on consistent product IDs and comparable purchase units.")

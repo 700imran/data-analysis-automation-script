@@ -1,0 +1,7 @@
+# Only the website is published; keep internal documents, engine and scripts out of the deployment.
+data_analysis_automation_suite
+marginpulse_intelligence_engine
+MarginPulse_Managed_Intelligence_Final_Launch_Kit
+integrations
+.github
+*.md

@@ -11,7 +11,7 @@ This package is the operational foundation for launching the managed reporting s
 | Folder | Contents |
 |---|---|
 | `brand_assets/` | Full MarginPulse Managed Intelligence logo, compact icon and usage note. |
-| `website/` | Responsive static client-facing website, privacy notice, terms, enquiry form code, deployment and form setup instructions. |
+| *(repo root)* | The website now lives at the repository root (`index.html`, `css/`, `js/`, `assets/`) so the repo deploys directly as a site. Deployment and go-live guides: `README_WEBSITE_DEPLOYMENT.md`, `README_WEBSITE_GO_LIVE.md`. Google Sheets lead capture: `integrations/google-sheets-leads/` at repo root. |
 | `documents/` | Editable client-facing templates and the internal operations playbook. |
 | `operations/` | Internal Operations Control Centre workbook and operating guide. |
 | `dummy_data/` | UAE distributor synthetic workbook, table CSVs and data dictionary. |
@@ -45,8 +45,8 @@ This package is the operational foundation for launching the managed reporting s
 
 1. Complete the actual service-provider legal identity and contact details in all documents and website notices.
 2. Have the contract, privacy, export / tax, invoice and cross-border payment treatment reviewed by a qualified professional for the actual provider and client jurisdictions.
-3. Create a monitored form inbox / provider account and configure the public endpoint in `website/js/config.js` using `website/SETUP_AND_GO_LIVE.md`.
-4. Deploy the `website/` folder to Vercel or Cloudflare Pages, connect the chosen domain / subdomain and verify HTTPS.
+3. Deploy the lead-capture Apps Script (`integrations/google-sheets-leads/SETUP.md` at repo root) and paste its web-app URL into `js/config.js` (`leadSheetEndpoint`).
+4. Deploy the repo root to Vercel, Cloudflare Pages or GitHub Pages (only the website files are published; see root `README.md`), connect the chosen domain / subdomain and verify HTTPS.
 5. Choose a secure storage / transfer environment, create client-specific restricted folders and test access isolation using synthetic files.
 6. Use `operations/MarginPulse_Operations_Control_Centre.xlsx` as the single live operations tracker. Do not maintain duplicate live lead records in two workbooks.
 7. Run the synthetic distributor data through the processing workflow. Log quality exceptions and complete report QA before generating the illustrative sample report.

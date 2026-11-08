@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#06283b">
   <meta name="description" content="MarginPulse Managed Intelligence turns existing sales, purchase, expense, inventory and receivables data into clear management reporting and decision support.">
   <meta property="og:title" content="MarginPulse | Managed Intelligence Reporting Service">
-  <meta property="og:description" content="Your business data. Our analysis. Better decisions.">
+  <meta property="og:description" content="Your Business Data. Our Analysis. Better Decisions.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/marginpulse-managed-intelligence-logo.png">
   <title>MarginPulse | Managed Intelligence Reporting Service</title>
@@ -15,8 +15,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+<meta name="theme-color" content="#06283B"><script src="js/boot.js"></script></head>
+<body><div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div><button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
   <div class="topline"><span class="status-dot"></span> Managed reporting for growing businesses <span class="topline-divider">|</span> Remote service for India &amp; UAE</div>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="MarginPulse home">
@@ -44,7 +44,7 @@
         <div class="visual-card main-visual-card">
           <div class="visual-top"><div><span class="mini-label">MANAGEMENT VIEW</span><strong>Business performance</strong></div><span class="live-pill"><i></i> Illustrative</span></div>
           <div class="visual-kpis"><div class="kpi-tile"><span>Revenue</span><strong>↗</strong><small>Trend review</small></div><div class="kpi-tile"><span>Gross margin</span><strong>◈</strong><small>Mix &amp; movement</small></div><div class="kpi-tile"><span>Receivables</span><strong>◷</strong><small>Ageing profile</small></div></div>
-          <div class="chart-panel"><div class="chart-head"><span>Performance trend</span><small>Illustrative layout · no client data</small></div><div class="chart-bars" aria-hidden="true"><i style="height:34%"></i><i style="height:47%"></i><i style="height:42%"></i><i style="height:58%"></i><i style="height:63%"></i><i style="height:76%"></i><i style="height:70%"></i><i style="height:88%"></i></div><div class="chart-axis"><span>Period 1</span><span>Period 8</span></div></div>
+          <div class="chart-panel"><div class="chart-head"><span>Performance trend</span><small>Illustrative layout · no client data</small></div><div class="chart-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="chart-axis"><span>Period 1</span><span>Period 8</span></div></div>
           <div class="insight-strip"><span class="insight-icon">✦</span><div><small>MANAGEMENT PRIORITY</small><strong>Find the movement. Understand the driver. Decide the next action.</strong></div></div>
         </div>
         <div class="floating-chip chip-top"><span class="chip-dot green"></span> Clear performance visibility</div><div class="floating-chip chip-bottom"><span class="chip-dot navy"></span> Action-focused reporting</div>
@@ -89,9 +89,11 @@
     <section class="pilot-section"><div class="section-wrap pilot-layout"><div><div class="eyebrow eyebrow-light"><span class="eyebrow-line"></span> START WITH A SCOPED PILOT</div><h2>Prove the workflow<br><em>before expanding it.</em></h2><p>A time-bound pilot can establish whether your data is usable, which metrics matter and what reporting cadence is practical.</p></div><div class="pilot-steps"><div><span>1</span><p><strong>Data suitability review</strong><small>Confirm sources, fields, coverage and limitations.</small></p></div><div><span>2</span><p><strong>Written pilot scope</strong><small>Agree deliverables, timeline, fee and responsibilities.</small></p></div><div><span>3</span><p><strong>Review &amp; decide</strong><small>Assess usefulness before moving to recurring reporting.</small></p></div><a class="btn btn-light" href="#enquiry">Request a pilot discussion <span>→</span></a></div></div></section>
 
     <section class="section section-wrap enquiry-section" id="enquiry"><div class="enquiry-copy"><div class="eyebrow"><span class="eyebrow-line"></span> START A CONVERSATION</div><h2>What should your management team be able to see?</h2><p>Share a few details about your business and current reporting process. Do not submit bank statements, customer-level financial records, passwords or other confidential files through this form.</p><div class="enquiry-assurance"><span>✓</span><div><strong>Low-friction first step</strong><small>Initial enquiry only. Data access is discussed separately after scope and confidentiality arrangements are agreed.</small></div></div><div class="enquiry-assurance"><span>✓</span><div><strong>Scope before commitment</strong><small>No recurring service starts without a written scope and fee confirmation.</small></div></div></div>
-      <form class="lead-form" id="leadForm" novalidate>
+      <noscript><p class="noscript-note">The enquiry form needs JavaScript. Please enable it, or contact us using the details on this site.</p></noscript>
+<form class="lead-form" id="leadForm" novalidate>
         <div class="form-head"><span class="form-label">ENQUIRY FORM</span><h3>Tell us about your business</h3><p>Fields marked * are required.</p></div>
-        <div class="form-grid">
+        <div class="form-progress" aria-live="polite"><span id="formProgressText">0 of 7 required fields complete</span><div class="bar"><i id="formProgressBar"></i></div></div>
+<div class="form-grid">
           <label>Full name *<input name="name" autocomplete="name" required maxlength="100" placeholder="Your name"></label>
           <label>Business email *<input name="email" type="email" autocomplete="email" required maxlength="150" placeholder="name@company.com"></label>
           <label>Company name *<input name="company" required maxlength="150" placeholder="Business name"></label>
@@ -101,11 +103,12 @@
           <label>Approx. employee count<select name="employees"><option value="">Select range</option><option>1–10</option><option>11–50</option><option>51–200</option><option>201–500</option><option>500+</option></select></label>
           <label>Current data source<select name="system"><option value="">Select system</option><option>Excel / Google Sheets</option><option>Tally</option><option>Zoho</option><option>ERP system</option><option>Accounting software</option><option>Multiple / not sure</option></select></label>
           <label class="full-field">What would you most like to improve? *<select name="objective" required><option value="">Select priority</option><option>Sales and revenue visibility</option><option>Product / customer profitability</option><option>Expense and cost visibility</option><option>Inventory and purchasing</option><option>Receivables and cash collection</option><option>Consolidated management reporting</option><option>Other / not sure</option></select></label>
-          <label class="full-field">How do you currently prepare reports? *<textarea name="challenge" rows="3" required maxlength="1200" placeholder="Briefly describe your reporting process or the challenge you want to solve."></textarea></label>
+          <label class="full-field">How do you currently prepare reports? *<textarea name="challenge" rows="3" required maxlength="1200" placeholder="Briefly describe your reporting process or the challenge you want to solve."></textarea><small class="char-count" aria-hidden="true"></small></label>
           <label>Preferred reporting frequency<select name="frequency"><option value="">Select frequency</option><option>Weekly</option><option>Monthly</option><option>Quarterly</option><option>As needed</option><option>Not sure</option></select></label>
           <label>Expected start timeline<select name="timeline"><option value="">Select timeline</option><option>Immediately</option><option>Within 30 days</option><option>Within 60–90 days</option><option>Exploring options</option></select></label>
         </div>
-        <label class="consent-line"><input type="checkbox" name="consent" required><span>I agree that MarginPulse may use these details to respond to this enquiry. I will not submit confidential financial data in this form. *</span></label>
+        <div class="hp" aria-hidden="true"><label>Leave this field empty<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<label class="consent-line"><input type="checkbox" name="consent" required><span>I agree that MarginPulse may use these details to respond to this enquiry. I will not submit confidential financial data in this form. *</span></label>
         <button class="btn btn-primary form-submit" type="submit">Submit enquiry <span>→</span></button>
         <div class="form-message" id="formMessage" role="status" aria-live="polite"></div>
         <p class="form-foot">Enquiry data is for responding to your request. See our <a href="privacy.html">Privacy Notice</a>.</p>
@@ -122,7 +125,7 @@
     </div></div></section>
   </main>
 
-  <footer class="site-footer"><div class="section-wrap footer-main"><div class="footer-brand"><a class="brand brand-footer" href="#top"><img src="assets/marginpulse-icon.png" alt="" class="brand-mark"><span class="brand-copy"><strong>Margin<span>Pulse</span></strong><small>MANAGED INTELLIGENCE</small></span></a><p>Your business data. Our analysis. Better decisions.</p></div><div class="footer-links"><div><strong>Explore</strong><a href="#service">The service</a><a href="#coverage">What we analyse</a><a href="#process">How it works</a><a href="#enquiry">Contact</a></div><div><strong>Information</strong><a href="privacy.html">Privacy notice</a><a href="terms.html">Website terms</a><a href="#enquiry">Request a proposal</a></div></div></div><div class="section-wrap footer-bottom"><span>© <span id="year"></span> MarginPulse. All rights reserved.</span><span>Managed Intelligence Reporting Service</span></div><p class="footer-legal">MarginPulse is used here as a brand name for the managed reporting service. Contracting and invoicing details are stated separately in the applicable proposal, agreement and invoice. This website does not represent that the brand is a separately incorporated legal entity.</p></footer>
+  <footer class="site-footer"><div class="section-wrap footer-main"><div class="footer-brand"><a class="brand brand-footer" href="#top"><img src="assets/marginpulse-icon.png" alt="" class="brand-mark"><span class="brand-copy"><strong>Margin<span>Pulse</span></strong><small>MANAGED INTELLIGENCE</small></span></a><p>Your Business Data. Our Analysis. Better Decisions.</p></div><div class="footer-links"><div><strong>Explore</strong><a href="#service">The service</a><a href="#coverage">What we analyse</a><a href="#process">How it works</a><a href="#enquiry">Contact</a></div><div><strong>Information</strong><a href="privacy.html">Privacy notice</a><a href="terms.html">Website terms</a><a href="#enquiry">Request a proposal</a></div></div></div><div class="section-wrap footer-bottom"><span>© <span id="year"></span> MarginPulse. All rights reserved.</span><span>Managed Intelligence Reporting Service</span></div><p class="footer-legal">MarginPulse is used here as a brand name for the managed reporting service. Contracting and invoicing details are stated separately in the applicable proposal, agreement and invoice. This website does not represent that the brand is a separately incorporated legal entity.</p></footer>
   <script src="js/config.js"></script><script src="js/app.js"></script>
 </body>
 </html>

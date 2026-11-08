@@ -9,18 +9,12 @@ Brand assets
 - brand_assets/MarginPulse_Icon.png
 - brand_assets/README_BRAND_ASSETS.md
 
-Website
-- website/index.html
-- website/privacy.html
-- website/terms.html
-- website/404.html
-- website/css/styles.css
-- website/js/app.js
-- website/js/config.js
-- website/assets/marginpulse-managed-intelligence-logo.png
-- website/assets/marginpulse-icon.png
-- website/README_DEPLOYMENT.md
-- website/SETUP_AND_GO_LIVE.md
+Website (moved to repository root)
+- ../index.html, ../privacy.html, ../terms.html, ../404.html
+- ../css/styles.css, ../js/app.js, ../js/config.js
+- ../assets/*
+- README_WEBSITE_DEPLOYMENT.md, README_WEBSITE_GO_LIVE.md (this folder)
+- ../integrations/google-sheets-leads/ (lead capture Apps Script + setup)
 
 Client and internal documents
 - documents/00_MarginPulse_Brand_Guidelines.docx

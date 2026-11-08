@@ -1,64 +1,37 @@
- Data Analysis Automation Suite (Quick Guide)
-1. Analysis Script (analysis_utils.py)
-Call: prepare_regression(), check_correlation(), compare_groups(), plot_sales_by_group()
+# MarginPulse
 
-Guide: Run regression, correlation, hypothesis tests, and charts in one go.
+This repository holds the MarginPulse Managed Intelligence **website** (at the repository root, ready to deploy) plus the engine, launch kit and legacy analysis scripts behind it.
 
-Benefit: Fast statistical insights with reusable functions.
+## Repository map
 
-Loss: Needs clean input data; raw files may break workflows.
+| Path | What it is |
+|---|---|
+| `index.html`, `privacy.html`, `terms.html`, `404.html`, `css/`, `js/`, `assets/` | **The website.** Static, responsive, no build step. |
+| `integrations/google-sheets-leads/` | Google Apps Script that stores website enquiries in a Google Sheet, plus setup steps. |
+| `marginpulse_intelligence_engine/` | Analysis engine v0.1.1 (Python, FastAPI, CLI), demo datasets including an Indian INR distributor, docs and 15 tests. |
+| `MarginPulse_Managed_Intelligence_Final_Launch_Kit/` | Brand assets, 15 document templates, operations tracker, dummy data, website guides. |
+| `data_analysis_automation_suite/` | The original data-analysis automation scripts and notebooks (moved here unchanged; they import each other, so keep the folder together). |
+| `vercel.json`, `_headers`, `netlify.toml`, `.vercelignore`, `.github/workflows/pages.yml` | Deployment settings (see below). |
 
-2. Clean Script (primary_clean_utils.py)
-Call: clean_dataframe(df)
+## Deploy the website
 
-Guide: Standardize messy CSV/Excel into analysis‑ready DataFrames.
+Only website files should be public. The settings in this repo make sure the internal folders are **not** published.
 
-Benefit: Consistent inputs, fewer analyst errors.
+- **Vercel:** import the repo, framework "Other", no build command, root directory `/`. `.vercelignore` excludes internal folders; `vercel.json` adds security headers.
+- **GitHub Pages:** Settings → Pages → Source: **GitHub Actions**. The included workflow publishes only the site files.
+- **Netlify or Cloudflare Pages:** build command and output directory come from `netlify.toml` (`_site`).
+- Do **not** serve the repo root with a plain static host that has no ignore or build step, or the documents, templates and demo data would be public.
 
-Loss: Custom cleaning rules may miss edge cases.
+## Connect lead capture (Google Sheet)
 
-3. Financial Metrics (financial_metrics_utils.py)
-Call: get_assumptions("TCS.NS")
+Follow `integrations/google-sheets-leads/SETUP.md`, then paste the web-app URL into `js/config.js` as `leadSheetEndpoint`. Until that is set, the live site shows an honest "form not available" message instead of pretending to send.
 
-Guide: Pull growth, margins, tax, capex, WC, discount rate from live market data.
+## Before going live
 
-Benefit: Real‑time assumptions for valuation models.
+- Replace the placeholders in `privacy.html` and `terms.html` and have them reviewed by a qualified professional for your jurisdictions.
+- Set `og:image` and a canonical URL once the domain is known (social previews need an absolute image URL).
+- Never commit `.env` files, tokens or client data.
 
-Loss: Dependent on external APIs; missing labels need safe handling.
+## Status
 
-4. Forecast Script (forecast_utils.py)
-Call: run_forecast()
-
-Guide: Build 3‑statement model → EV & NPV outputs.
-
-Benefit: 20% faster, 10–12% more accurate valuations.
-
-Loss: Assumption quality drives accuracy; garbage in = garbage out.
-
-5. Task Runner (task_runner.py)
-Call: python task_runner.py
-
-Guide: Orchestrates cleaning, analysis, KPI modeling, forecasting in one run.
-
-Benefit: Saves 10–15 analyst hours/week, 70–80% faster workflows.
-
-Loss: Heavy dependency on all modules; one failure can stop the pipeline.
-
-📌 Business Takeaway
-This suite automates analytics end‑to‑end, cutting cost and time while improving accuracy.
-
-Upside: Speed, consistency, scalability.
-
-Downside: Relies on clean data and stable APIs; requires maintenance for edge cases.
-
----
-
-## Repository Map
-
-| Path | What it is | Status |
-|---|---|---|
-| Root `*.py`, `*.ipynb`, `*.md` | Data Analysis Automation Suite (sections above) | Original content, unchanged |
-| `marginpulse_intelligence_engine/` | MarginPulse Intelligence Engine v0.1.0: Python engine, FastAPI service, CLI, demo datasets, docs, tests | Prototype. 8 unit/API tests pass; see its `docs/SECURITY_AND_PRODUCTION_GATE.md` before any real client data or public deployment |
-| `MarginPulse_Managed_Intelligence_Final_Launch_Kit/` | Service launch kit: brand assets, 15 templates/policies (`documents/`), static website, operations tracker, dummy data | Templates and drafts. Legal documents (NDA, agreement, privacy, terms) need review by a qualified professional before use |
-
-All data in the launch kit's `dummy_data/` and the engine's `examples/` is synthetic. Never commit `.env` files or client data.
+The website, engine and templates are pilot-stage. Engine results are verified against independently calculated figures on the bundled synthetic datasets; see `marginpulse_intelligence_engine/README.md` and `CHANGELOG.md` for scope and known limits.

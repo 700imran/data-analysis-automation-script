@@ -1,0 +1,7 @@
+{
+  "name": "data-analysis-automation-script-site",
+  "private": true,
+  "scripts": {
+    "build": "node -e \"console.log('Static site: no build step required.')\""
+  }
+}
